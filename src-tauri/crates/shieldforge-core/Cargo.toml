@@ -1,0 +1,24 @@
+[package]
+name = "shieldforge-core"
+version = "0.1.0"
+description = "ShieldForge security engine interfaces, domain model and core logic"
+edition = "2021"
+rust-version = "1.77.2"
+license = "MIT OR Apache-2.0"
+
+[dependencies]
+# Intentionally empty by default.
+#
+# The core crate must build and test with nothing but `rustc`: it is the part of
+# the product that every platform shares, and a reviewer must be able to run
+# `cargo test -p shieldforge-core` in an offline, auditable environment.
+#
+# `serde` is optional and only used for IPC serialisation by the desktop shell.
+serde = { version = "1", features = ["derive"], optional = true }
+
+[features]
+default = []
+serde = ["dep:serde"]
+
+[dev-dependencies]
+# None - the test suite also runs on `std` alone.
