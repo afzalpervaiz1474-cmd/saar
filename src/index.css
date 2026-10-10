@@ -1,0 +1,190 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * ShieldForge design tokens.
+ *
+ * Two themes only (dark = default "security console", light = "daylight").
+ * Palette is intentionally restrained: obsidian surfaces, one emerald primary,
+ * one cyan secondary used *only* for non-protection information signals, and a
+ * semantic set for status (ok / warn / danger / info / unavailable).
+ */
+
+@layer base {
+  :root,
+  [data-theme='dark'] {
+    --sf-canvas: 11 14 18; /* #0B0E12 obsidian */
+    --sf-surface: 18 22 28; /* #12161C */
+    --sf-surface-2: 23 28 35; /* #171C23 */
+    --sf-surface-3: 30 36 45; /* #1E242D */
+    --sf-line: 33 40 50; /* #212832 */
+    --sf-line-strong: 46 55 68;
+
+    --sf-ink: 231 236 243; /* #E7ECF3 */
+    --sf-ink-muted: 148 160 176; /* #94A0B0 */
+    --sf-ink-subtle: 108 119 135;
+
+    --sf-accent: 16 185 129; /* emerald 500 */
+    --sf-accent-strong: 5 150 105; /* emerald 600 */
+    --sf-accent-soft: 6 78 59; /* emerald 900, for tinted backgrounds */
+
+    --sf-signal: 34 211 238; /* cyan 400 - information only */
+    --sf-signal-soft: 22 78 99;
+
+    --sf-warn: 245 158 11; /* amber 500 */
+    --sf-warn-soft: 69 45 6;
+
+    --sf-danger: 239 68 68; /* red 500 */
+    --sf-danger-soft: 76 22 22;
+
+    --sf-info: 148 163 184; /* slate 400 - neutral "not configured" */
+    --sf-info-soft: 40 48 60;
+
+    color-scheme: dark;
+  }
+
+  [data-theme='light'] {
+    --sf-canvas: 244 246 249; /* #F4F6F9 */
+    --sf-surface: 255 255 255;
+    --sf-surface-2: 248 250 252;
+    --sf-surface-3: 241 245 249;
+    --sf-line: 226 232 240;
+    --sf-line-strong: 203 213 225;
+
+    --sf-ink: 17 24 39; /* slate 900 */
+    --sf-ink-muted: 90 102 122;
+    --sf-ink-subtle: 128 139 156;
+
+    --sf-accent: 5 150 105; /* emerald 600 */
+    --sf-accent-strong: 4 120 87;
+    --sf-accent-soft: 209 250 229;
+
+    --sf-signal: 8 145 178; /* cyan 600 */
+    --sf-signal-soft: 207 250 254;
+
+    --sf-warn: 180 83 9; /* amber 700 */
+    --sf-warn-soft: 254 243 199;
+
+    --sf-danger: 185 28 28; /* red 700 */
+    --sf-danger-soft: 254 226 226;
+
+    --sf-info: 100 116 139; /* slate 500 */
+    --sf-info-soft: 226 232 240;
+
+    color-scheme: light;
+  }
+
+  * {
+    @apply border-line;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    @apply bg-canvas text-ink font-sans antialiased;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'ss01';
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Ambient depth: a single, very low-opacity wash. Not a glass effect. */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background:
+      radial-gradient(60rem 40rem at 12% -10%, rgb(var(--sf-accent) / 0.07), transparent 70%),
+      radial-gradient(50rem 34rem at 100% 0%, rgb(var(--sf-signal) / 0.05), transparent 65%);
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-accent/70 ring-offset-2 ring-offset-canvas;
+  }
+
+  ::selection {
+    background: rgb(var(--sf-accent) / 0.28);
+  }
+
+  /* Scrollbars */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(var(--sf-line-strong)) transparent;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: rgb(var(--sf-line-strong));
+    border-radius: 9999px;
+    border: 3px solid transparent;
+    background-clip: content-box;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: rgb(var(--sf-ink-subtle) / 0.7);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+}
+
+@layer components {
+  .sf-card {
+    @apply rounded-xl border border-line bg-surface shadow-card;
+  }
+
+  .sf-card-hover {
+    @apply transition-colors duration-200 ease-smooth hover:border-line-strong;
+  }
+
+  .sf-divider {
+    @apply h-px w-full bg-line;
+  }
+
+  .sf-label {
+    @apply text-2xs font-semibold uppercase tracking-[0.08em] text-ink-subtle;
+  }
+
+  .sf-mono {
+    @apply font-mono text-[0.8125rem] leading-relaxed;
+  }
+
+  .sf-scroll {
+    @apply overflow-y-auto overscroll-contain;
+  }
+
+  .sf-skeleton {
+    @apply relative overflow-hidden rounded-md bg-surface-3;
+  }
+
+  .sf-skeleton::after {
+    content: '';
+    @apply absolute inset-0 -translate-x-full animate-shimmer;
+    background-image: linear-gradient(
+      90deg,
+      transparent,
+      rgb(var(--sf-ink-subtle) / 0.12),
+      transparent
+    );
+  }
+}

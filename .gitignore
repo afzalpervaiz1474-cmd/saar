@@ -1,0 +1,39 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build output
+dist/
+dist-ssr/
+*.tsbuildinfo
+
+# Tauri / Rust build artefacts
+src-tauri/target/
+src-tauri/gen/
+**/*.rs.bk
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Local runtime data (never commit real quarantine or scan data)
+src-tauri/runtime/
+*.sandbox
+.env
+.env.*
+!.env.example
+
+# Editors / OS
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
+
+# Test output
+coverage/

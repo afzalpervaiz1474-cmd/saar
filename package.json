@@ -1,0 +1,47 @@
+{
+  "name": "shieldforge-antivirus",
+  "private": true,
+  "version": "0.1.0",
+  "description": "ShieldForge Antivirus - Phase 1 desktop security dashboard (Tauri 2 + React + TypeScript + Rust)",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc -b --noEmit false --emitDeclarationOnly false",
+    "lint": "tsc -b",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "tauri": "tauri",
+    "tauri:dev": "tauri dev",
+    "tauri:build": "tauri build",
+    "test:rust": "cargo test --manifest-path src-tauri/Cargo.toml -p shieldforge-core",
+    "test:all": "npm run test && npm run test:rust",
+    "icons": "python3 tools/generate_icons.py",
+    "verify": "npm run lint && npm run test && npm run build"
+  },
+  "dependencies": {
+    "@tauri-apps/api": "^2.1.1",
+    "lucide-react": "^0.469.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.1.0",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.1.0",
+    "@testing-library/user-event": "^14.5.2",
+    "@types/node": "^22.20.5",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.20",
+    "jsdom": "^25.0.1",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.11",
+    "vitest": "^2.1.8"
+  }
+}
